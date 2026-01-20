@@ -1,0 +1,2267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2025 Global Health Conference – Interactive Program</title>
+  <style>
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('https://raw.githubusercontent.com/dept/highway/master/docs/assets/fonts/Gilroy-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #1a4d7a;
+      --primary-dark: #0f2f4f;
+      --primary-light: #2d6ba3;
+      --accent: #4a90e2;
+      --text: #1a1a1a;
+      --text-light: #666;
+      --bg: #f8f9fa00;
+      --white: #ffffff;
+      --border: #e0e0e0;
+      --border-light: #f0f0f0;
+      --success: #28a745;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+      --radius: 8px;
+      --radius-sm: 4px;
+    }
+
+    body {
+      font-family: 'Gilroy', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+      background-color: var(--primary);
+      padding: 20px;
+      border-radius: var(--radius);
+    }
+
+    .header h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      color: var(--white);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .header .subtitle {
+      color: var(--white);
+      font-size: 1.4rem;
+    }
+
+    .header .meta {
+      margin-top: 12px;
+      font-size: 1.0rem;
+      color: var(--white);
+    }
+
+    /* Day Tabs */
+    .day-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 24px;
+      background: var(--white);
+      padding: 12px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .day-tab {
+      padding: 10px 20px;
+      border: 2px solid var(--border);
+      background: var(--white);
+      color: var(--text);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .day-tab:hover {
+      border-color: var(--primary-light);
+      background: var(--primary-light);
+      color: var(--white);
+    }
+
+    .day-tab.active {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
+    }
+
+    /* Dev Button - Remove before production
+    .dev-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      padding: 12px 20px;
+      background: #dc2626;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+
+    .dev-button:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+
+    .dev-button.active {
+      background: #16a34a;
+    }
+
+    .dev-button.active:hover {
+      background: #15803d;
+    }
+
+    */
+
+    /* Controls */
+    .controls {
+      background: var(--white);
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .controls-row {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .filters-row {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      align-items: stretch;
+    }
+
+    @media (min-width: 768px) {
+      .filters-row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: start;
+      }
+
+      .filters-row .filter-select {
+        flex: 1;
+        min-width: 150px;
+      }
+
+      .filters-row .clear-filters-btn {
+        flex-shrink: 0;
+      }
+    }
+
+    .search-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      /* Allow search mode buttons to wrap if needed on very small screens */
+    }
+
+    .search-primary {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 16px;
+      padding-left: 40px;
+      padding-right: 12px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .search-input-wrapper .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .search-mode-toggle {
+      display: flex;
+      gap: 2px;
+      background: var(--border-light);
+      padding: 2px;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    .search-mode-btn {
+      padding: 6px 10px;
+      border: none;
+      background: transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: var(--text-light);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .search-mode-btn.active {
+      background: var(--white);
+      color: var(--primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .clear-search-btn {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text);
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .clear-search-btn:hover {
+      background: var(--border-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .clear-filters-btn {
+      padding: 12px 20px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .clear-filters-btn:hover {
+      background: var(--border-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Autocomplete */
+    .autocomplete {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 4px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-hover);
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
+      display: none;
+    }
+
+    .autocomplete.show {
+      display: block;
+    }
+
+    .autocomplete-item {
+      padding: 12px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border-light);
+      transition: background 0.15s;
+    }
+
+    .autocomplete-item:last-child {
+      border-bottom: none;
+    }
+
+    .autocomplete-item:hover,
+    .autocomplete-item.selected {
+      background: var(--border-light);
+    }
+
+    .autocomplete-item-title {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+
+    .autocomplete-item-meta {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .autocomplete-item-type {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* Flash animation for highlighted sessions */
+    .session-card.flash {
+      animation: flashHighlight 2s ease-out;
+    }
+
+    @keyframes flashHighlight {
+      0% {
+        box-shadow: 0 0 0 0 rgba(26, 77, 122, 0.4);
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+
+      50% {
+        box-shadow: 0 0 0 8px rgba(26, 77, 122, 0);
+      }
+
+      100% {
+        outline: none;
+      }
+    }
+
+    .filter-select {
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      background: var(--white);
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+      align-self: start;
+      height: fit-content;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .results-count {
+      text-align: center;
+      color: var(--text-light);
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    .results-count strong {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Sessions Container */
+    .sessions-container {
+      display: block;
+    }
+
+
+    .time-slot {
+      margin-bottom: 24px;
+    }
+
+    .time-header {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .time-sessions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    /* Session Card */
+    .session-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .session-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    /* Live Session Styling */
+    .session-card.live {
+      border: 2px solid #dc2626;
+      background: #fef2f2;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+
+    .session-card.live:hover {
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2), var(--shadow-hover);
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #dc2626;
+      color: var(--white);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-left: 8px;
+      animation: pulse 2s infinite;
+    }
+
+    .live-badge::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--white);
+      border-radius: 50%;
+      margin-right: 6px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    .session-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: -20px -20px 16px -20px;
+      padding: 14px 20px;
+      background: var(--border-light);
+      border-bottom: 2px solid var(--border);
+      border-radius: var(--radius) var(--radius) 0 0;
+      gap: 12px;
+    }
+
+    .session-type {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .session-type.lecture {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    .session-type.panel {
+      background: #f3e5f5;
+      color: #7b1fa2;
+    }
+
+    .session-type.special {
+      background: #fff3e0;
+      color: #e65100;
+    }
+
+    .session-type.poster {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .session-type.meal {
+      background: #fce4ec;
+      color: #c2185b;
+    }
+
+    .session-type.break {
+      background: #e3e3e3;
+      color: #424242;
+    }
+
+    .session-type.workshop {
+      background: #e0f2f1;
+      color: #00695c;
+    }
+
+    .subcode {
+      display: inline-block;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #fff;
+      color: #111827;
+      border: 1px solid var(--border);
+      font-size: 0.72rem;
+      margin-left: 6px;
+    }
+
+    .session-time {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .session-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .session-details {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+
+    .session-details strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .session-room {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--border-light);
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-top: 8px;
+    }
+
+    /* Sub-Sessions */
+    .sub-sessions-container {
+      margin-top: 12px;
+      padding-top: 0;
+    }
+
+    .sub-sessions-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+      margin-top: 16px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .sub-sessions-button:hover {
+      background: var(--primary-light);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(26, 77, 122, 0.3);
+    }
+
+    .sub-sessions-button:active {
+      transform: translateY(0);
+    }
+
+    .sub-sessions-button svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .sub-sessions-container.collapsed .sub-sessions-list {
+      display: none;
+    }
+
+    .sub-sessions-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .sub-session-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 16px;
+      transition: all 0.2s;
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .sub-session-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateX(4px);
+      border-left-color: var(--primary-light);
+    }
+
+    /* Ensure nested links in sub-session cards work correctly */
+    .sub-session-card a:not(.avatar) {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .sub-session-card a:not(.avatar):hover {
+      color: var(--primary-light);
+    }
+
+    .sub-session-number {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--primary);
+      color: var(--white);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .sub-session-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      padding-right: 40px;
+      line-height: 1.4;
+    }
+
+    .sub-session-presenter {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+
+    .sub-session-presenter strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .sub-session-presenter a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .sub-session-presenter a:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    /* Avatars in sub-session cards */
+    .sub-session-card .avatars {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+
+    .sub-session-time {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    .sub-session-details {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.5;
+      display: none;
+    }
+
+    .sub-session-card.expanded .sub-session-details {
+      display: block;
+    }
+
+    .sub-session-card.expanded {
+      padding-bottom: 20px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-light);
+    }
+
+    .empty-state svg {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .highlight {
+      background: #fff9c4;
+      padding: 2px 4px;
+      border-radius: 2px;
+    }
+
+    /* Avatars */
+    .avatars {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      margin-bottom: 8px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+      border: 2px solid var(--white);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .avatar:hover {
+      transform: scale(1.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 5;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar[data-fallback] {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.75rem;
+      font-family: 'Gilroy', system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .avatar:not(:has(img)) {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.75rem;
+      font-family: 'Gilroy', system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1;
+    }
+
+    /* Ensure linked avatars with fallback have white text (higher specificity) */
+    a.avatar[data-fallback],
+    a.avatar:not(:has(img)) {
+      color: var(--white);
+    }
+
+    /* Linked session cards and avatars */
+    .session-card[href] {
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .avatar[href] {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Ensure fallback avatars (with or without links) have white text */
+    .avatar[href][data-fallback] {
+      color: var(--white);
+    }
+
+    .avatar[href]:not(:has(img)) {
+      color: var(--white);
+    }
+
+    /* Date and Time Headers */
+    .date-section {
+      grid-column: 1 / -1;
+      margin-top: 56px;
+      margin-bottom: 20px;
+    }
+
+    .date-section:first-child {
+      margin-top: 0;
+    }
+
+    .date-header {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 8px;
+      margin-bottom: 24px;
+      padding-top: 8px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--primary);
+    }
+
+    .time-slot-header {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 36px;
+      margin-bottom: 20px;
+      padding-top: 4px;
+      padding-left: 8px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .time-slot-header:first-child {
+      margin-top: 0;
+    }
+
+    .time-slot-sessions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 8px;
+    }
+
+    /* Responsive */
+    @media (max-width: 767px) {
+      .container {
+        padding: 16px;
+      }
+
+      .day-tabs {
+        padding: 8px;
+      }
+
+      .day-tab {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+      }
+
+      .controls {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Dev Button - Remove before production -->
+  <!--
+  <button id="devLiveButton" class="dev-button" title="Toggle Live Demo Mode">🔴 Demo Live</button>
+  -->
+
+  <div class="container">
+    <div class="header">
+      <h1>2026 Global Health Bridge</h1>
+      <div class="subtitle">Interactive Program Schedule</div>
+      <div class="meta">February 2 – February 3, 2026 <br> Danbury Hospital, Connecticut, USA <br> Location: Creasy
+        Auditorium
+      </div>
+    </div>
+
+    <div class="day-tabs" id="dayTabs">
+      <button class="day-tab active" data-day="all">All Days</button>
+      <button class="day-tab" data-day="0">Mon · Feb 2</button>
+      <button class="day-tab" data-day="1">Tue · Feb 3</button>
+    </div>
+
+    <div class="controls">
+      <div class="controls-row">
+        <div class="search-box">
+          <div class="search-input-wrapper">
+            <div class="search-primary">
+              <input type="text" id="searchInput" placeholder="Search sessions, speakers, topics..." autocomplete="off">
+              <span class="search-icon">🔍</span>
+              <div class="autocomplete" id="autocomplete"></div>
+            </div>
+            <div class="search-mode-toggle">
+              <button class="search-mode-btn active" data-mode="all" type="button">All</button>
+              <button class="search-mode-btn" data-mode="sessions" type="button">Sessions</button>
+              <button class="search-mode-btn" data-mode="people" type="button">Speakers</button>
+            </div>
+            <button class="clear-search-btn" id="clearSearchBtn" type="button" style="display: none;">Clear</button>
+          </div>
+        </div>
+        <div class="filters-row">
+          <select class="filter-select" id="typeFilter">
+            <option value="">All Types</option>
+          </select>
+          <select class="filter-select" id="roomFilter">
+            <option value="">All Rooms</option>
+          </select>
+          <select class="filter-select" id="speakerFilter">
+            <option value="">All Speakers</option>
+          </select>
+          <button class="clear-filters-btn" id="clearFiltersBtn" type="button">Clear Filters</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-count" id="resultsCount"></div>
+
+    <div id="listView" class="sessions-container"></div>
+  </div>
+
+  <script>
+    // Session Data
+    const sessions = [
+      // Monday, February 2, 2026 (Day 0 - using 0-index internally if dayTabs relies on it, or update dayTabs logic. Original used Day 0 for Sun, Day 1 for Mon. I will use Day 0 for Mon, Day 1 for Tue)
+      {
+        id: 'mon-1',
+        day: 0,
+        date: '2026-02-02',
+        start: '08:00',
+        end: '08:15',
+        type: 'Special',
+        title: 'Welcome and Introductions',
+        subtitle: 'Lead: Aparna Oltikar',
+        moderator: 'Aparna Oltikar',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-2',
+        day: 0,
+        date: '2026-02-02',
+        start: '08:15',
+        end: '09:00',
+        type: 'Lecture',
+        title: 'Introduction to Global Health Bridge Course at Nuvance Health',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Bulat Ziganshin'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-3',
+        day: 0,
+        date: '2026-02-02',
+        start: '09:00',
+        end: '10:30',
+        type: 'Lecture',
+        title: 'Global Public Health: Existential Crises and the Role of the US',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Kirk Scirto'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-4',
+        day: 0,
+        date: '2026-02-02',
+        start: '10:30',
+        end: '10:45',
+        type: 'Break',
+        title: 'Break',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-5',
+        day: 0,
+        date: '2026-02-02',
+        start: '10:45',
+        end: '12:00',
+        type: 'Lecture',
+        title: 'Infectious Diseases in the Global South',
+        subtitle: 'Format: Presentation, case reports',
+        moderator: '',
+        speakers: ['Steve Scholand'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-6',
+        day: 0,
+        date: '2026-02-02',
+        start: '12:00',
+        end: '12:30',
+        type: 'Meal',
+        title: 'Lunch Break',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-7',
+        day: 0,
+        date: '2026-02-02',
+        start: '12:30',
+        end: '13:30',
+        type: 'Lecture',
+        title: 'Healthcare in Armenia: Global Perspective and Challenges',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Gohar Shahsuvaryan'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-8',
+        day: 0,
+        date: '2026-02-02',
+        start: '13:30',
+        end: '14:45',
+        type: 'Lecture',
+        title: 'Local Global Health: Perspectives from the Chiricahua Community Health Centers in Arizona (tentative title)',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Jonathan Melk'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-9',
+        day: 0,
+        date: '2026-02-02',
+        start: '14:45',
+        end: '15:00',
+        type: 'Break',
+        title: 'Break',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-10',
+        day: 0,
+        date: '2026-02-02',
+        start: '15:00',
+        end: '16:15',
+        type: 'Panel',
+        title: 'Bridging the Gap in Global Mental Health Education Between High- and Low/Middle-Income Countries',
+        subtitle: 'Format: Interactive Panel Discussion',
+        moderator: 'Charles Herrick',
+        speakers: ['Majd Soudan', 'Sabih Rahman', 'Psychiatry Residents from Makerere University'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-11',
+        day: 0,
+        date: '2026-02-02',
+        start: '16:15',
+        end: '16:30',
+        type: 'Special',
+        title: 'Global Health Bridge Group Photo',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-12',
+        day: 0,
+        date: '2026-02-02',
+        start: '16:30',
+        end: '18:00',
+        type: 'Networking',
+        title: 'Global Health Reception, Networking, and Posters',
+        moderator: '',
+        speakers: [],
+        room: 'Robilotti Conference Room'
+      },
+      // Tuesday, February 3, 2026
+      {
+        id: 'tue-1',
+        day: 1,
+        date: '2026-02-03',
+        start: '08:00',
+        end: '09:15',
+        type: 'Lecture',
+        title: 'Decolonizing Global Health',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Kirk Scirto'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-2',
+        day: 1,
+        date: '2026-02-03',
+        start: '09:15',
+        end: '09:30',
+        type: 'Break',
+        title: 'Break',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-3',
+        day: 1,
+        date: '2026-02-03',
+        start: '09:30',
+        end: '11:00',
+        type: 'Panel',
+        title: 'Global Health As a Career: Opportunities and Challenges',
+        subtitle: 'Format: Interactive Panel Discussion',
+        moderator: 'Steve Scholand',
+        speakers: ['Gohar Shahsuvaryan', 'Jonathan Melk', 'Jasper Tolarba', 'Kirk Scirto', 'Fiona Makoni'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-4',
+        day: 1,
+        date: '2026-02-03',
+        start: '11:00',
+        end: '12:00',
+        type: 'Lecture',
+        title: 'Healthcare in the Philippines: Global Perspective and Challenges',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Jasper Tolarba'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-5',
+        day: 1,
+        date: '2026-02-03',
+        start: '12:00',
+        end: '13:30',
+        type: 'Meal',
+        title: 'Lunch and headshots/photos for residency applications',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-6',
+        day: 1,
+        date: '2026-02-03',
+        start: '13:30',
+        end: '14:30',
+        type: 'Lecture',
+        title: 'Healthcare in Zimbabwe: Global Perspective and Challenges',
+        subtitle: 'Format: Virtual Lecture',
+        moderator: '',
+        speakers: ['Fiona Makoni'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-7',
+        day: 1,
+        date: '2026-02-03',
+        start: '14:30',
+        end: '15:30',
+        type: 'Lecture',
+        title: 'Malaria in Resource-Limited Environments: Diagnosis, Treatment, and Prevention (tentative title)',
+        subtitle: 'Format: Presentation, case reports',
+        moderator: '',
+        speakers: ['Steve Scholand'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-8',
+        day: 1,
+        date: '2026-02-03',
+        start: '15:30',
+        end: '15:45',
+        type: 'Break',
+        title: 'Break',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-9',
+        day: 1,
+        date: '2026-02-03',
+        start: '15:45',
+        end: '17:15',
+        type: 'Lecture',
+        title: 'The Role of Public Health in Addressing Armed Conflict',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Kaveh Khoshnood'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-10',
+        day: 1,
+        date: '2026-02-03',
+        start: '17:15',
+        end: '17:30',
+        type: 'Special',
+        title: 'Adjourn Global Health Bridge',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      }
+    ];
+
+    // Speaker photos - Add photo URLs here as you get them
+    // Format: "Speaker Name": "https://yourwebsite.com/path/to/photo.jpg"
+    const SPEAKER_PHOTOS = {
+      // Example entries (replace with your actual photo URLs):
+      "Bulat Ziganshin": "https://static.wixstatic.com/media/a339cb_df74ae8b7be84e569791bdf13113e1cc~mv2.jpg",
+      "Aparna Oltikar": "https://static.wixstatic.com/media/a339cb_44105c79e3a641e7941afb34c0a1e48f~mv2.png",
+    };
+
+    // Speaker bio page URLs - Add URLs here
+    // Format: "Speaker Name": "speaker.html?name=Speaker Name"
+    const SPEAKER_URLS = {
+      // URLs are generated dynamically as: speaker.html?name=Speaker Name
+      // Add speaker info below in SPEAKER_INFO
+    };
+
+    // Speaker information - Biography, expertise, etc.
+    const SPEAKER_INFO = {
+      "Bulat Ziganshin": {
+        title: "Global Health Conference Organizer & Moderator",
+        biography: "Bulat Ziganshin is a prominent figure in global health education and conference organization. With extensive experience in facilitating international collaborations, Bulat has been instrumental in bringing together diverse voices from around the world to advance global health initiatives. His work focuses on creating inclusive platforms for knowledge exchange, fostering partnerships between institutions, and developing innovative formats for global health conferences that maximize engagement and impact.",
+        expertise: [
+          "Global Health Conference Organization",
+          "International Partnership Development",
+          "Educational Program Design",
+          "Cross-Cultural Collaboration"
+        ]
+      },
+      "Aparna Oltikar": {
+        title: "Conference Coordinator & Moderator",
+        biography: "Aparna Oltikar is dedicated to advancing global health education through innovative conference formats and collaborative partnerships.",
+        expertise: [
+          "Conference Coordination",
+          "Global Health Education",
+          "Partnership Development"
+        ]
+      }
+      // Add more speakers as needed
+    };
+
+    // Generate speaker URL
+    function getSpeakerUrl(name) {
+      return `speaker.html?name=${encodeURIComponent(name)}`;
+    }
+
+    // Generate avatar HTML
+    function avatarHTML(name) {
+      const url = SPEAKER_PHOTOS[name];
+      const hasBioInfo = SPEAKER_INFO[name] ? true : false;
+      const bioUrl = hasBioInfo ? getSpeakerUrl(name) : null;
+
+      let avatarContent;
+      if (url) {
+        avatarContent = `<img loading="lazy" referrerpolicy="no-referrer" alt="${name}" src="${url}" onerror="this.parentElement.setAttribute('data-fallback', ''); this.remove();">`;
+      } else {
+        const initials = name
+          .split(/\s+/)
+          .slice(0, 2)
+          .map(w => w[0])
+          .join('')
+          .toUpperCase();
+        avatarContent = initials;
+      }
+
+      // Always create a link to speaker page (even if no bio info yet)
+      // This allows all avatars to be clickable and link to dynamic speaker pages
+      const speakerUrl = bioUrl || getSpeakerUrl(name);
+      return `<a href="${speakerUrl}" class="avatar" aria-label="${name}" title="${name}" ${!url ? 'data-fallback' : ''}>${avatarContent}</a>`;
+    }
+
+    // Generate subcodes for sessions
+    const LABEL_PREFIX = {
+      'Plenary': 'PL',
+      'Panel': 'PA',
+      'Breakout': 'BR',
+      'Meal': 'ME',
+      'Special': 'SP',
+      'Workshop': 'WS',
+      'Networking': 'NW',
+      'Poster': 'PO',
+      'Break': 'BR',
+      'Lecture': 'LE'
+    };
+
+    const SUBCODES = (() => {
+      const out = {};
+      // Group sessions by type
+      const groups = {};
+      sessions.forEach(s => {
+        const type = s.type || 'Unknown';
+        if (!groups[type]) {
+          groups[type] = [];
+        }
+        groups[type].push(s);
+      });
+
+      // Sort each group by date, then start time, then title
+      for (const [type, arr] of Object.entries(groups)) {
+        arr.sort((a, b) => {
+          const dateCompare = a.date.localeCompare(b.date);
+          if (dateCompare !== 0) return dateCompare;
+          const timeCompare = a.start.localeCompare(b.start);
+          if (timeCompare !== 0) return timeCompare;
+          return a.title.localeCompare(b.title);
+        });
+
+        // Generate prefix
+        const pref = LABEL_PREFIX[type]
+          || (type || 'XX').split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0, 2)
+          || 'XX';
+
+        // Assign codes
+        arr.forEach((s, i) => {
+          out[s.id] = `${pref}${String(i + 1).padStart(2, '0')}`;
+        });
+      }
+      return out;
+    })();
+
+    // State
+    let currentDay = 'all';
+    let searchTerm = '';
+    let searchMode = 'all'; // 'all', 'sessions', or 'people'
+    let typeFilter = '';
+    let roomFilter = '';
+    let speakerFilter = '';
+
+    // DOM Elements
+    const dayTabs = document.getElementById('dayTabs');
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const autocomplete = document.getElementById('autocomplete');
+    const typeFilterEl = document.getElementById('typeFilter');
+    const roomFilterEl = document.getElementById('roomFilter');
+    const speakerFilterEl = document.getElementById('speakerFilter');
+    const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+    const listView = document.getElementById('listView');
+    const resultsCount = document.getElementById('resultsCount');
+    const searchModeButtons = document.querySelectorAll('.search-mode-btn');
+
+    // Autocomplete state
+    let autocompleteItems = [];
+    let selectedAutocompleteIndex = -1;
+
+    // Autocomplete functions
+    function updateAutocomplete(query) {
+      if (!query || query.length < 2) {
+        autocomplete.classList.remove('show');
+        autocompleteItems = [];
+        return;
+      }
+
+      const queryLower = query.toLowerCase();
+      const matches = [];
+
+      sessions.forEach(session => {
+        let searchFields = [];
+
+        if (searchMode === 'sessions') {
+          searchFields = [session.title, session.subtitle || ''];
+        } else if (searchMode === 'people') {
+          searchFields = [
+            session.moderator || '',
+            ...session.speakers
+          ];
+        } else {
+          searchFields = [
+            session.title,
+            session.subtitle || '',
+            session.moderator || '',
+            ...session.speakers
+          ];
+        }
+
+        const searchText = searchFields.join(' ').toLowerCase();
+        if (searchText.includes(queryLower)) {
+          // Calculate relevance score
+          let score = 0;
+          const titleLower = session.title.toLowerCase();
+
+          if (titleLower.includes(queryLower)) {
+            score += 10;
+            if (titleLower.startsWith(queryLower)) {
+              score += 5;
+            }
+          }
+          if (session.subtitle && session.subtitle.toLowerCase().includes(queryLower)) {
+            score += 3;
+          }
+
+          matches.push({ session, score });
+        }
+      });
+
+      // Sort by score and limit to 8 results
+      matches.sort((a, b) => b.score - a.score);
+      autocompleteItems = matches.slice(0, 8).map(m => m.session);
+
+      if (autocompleteItems.length > 0) {
+        renderAutocomplete();
+        autocomplete.classList.add('show');
+      } else {
+        autocomplete.classList.remove('show');
+      }
+    }
+
+    function renderAutocomplete() {
+      autocomplete.innerHTML = '';
+      selectedAutocompleteIndex = -1;
+
+      autocompleteItems.forEach((session, index) => {
+        const item = document.createElement('div');
+        item.className = 'autocomplete-item';
+        item.dataset.index = index;
+
+        const typeClass = session.type.toLowerCase().replace(/\s+/g, '-');
+        const timeStr = `${formatTime(session.start)} – ${formatTime(session.end)}`;
+
+        item.innerHTML = `
+          <div class="autocomplete-item-title">${highlight(session.title, searchInput.value)}</div>
+          <div class="autocomplete-item-meta">
+            <span class="autocomplete-item-type ${typeClass}">${session.type}</span>
+            <span>${timeStr}</span>
+            <span>•</span>
+            <span>Day ${session.day + 1}</span>
+          </div>
+        `;
+
+        item.addEventListener('click', () => {
+          selectAutocompleteItem(session);
+        });
+
+        item.addEventListener('mouseenter', () => {
+          selectedAutocompleteIndex = index;
+          updateAutocompleteSelection();
+        });
+
+        autocomplete.appendChild(item);
+      });
+    }
+
+    function updateAutocompleteSelection() {
+      const items = autocomplete.querySelectorAll('.autocomplete-item');
+      items.forEach((item, index) => {
+        if (index === selectedAutocompleteIndex) {
+          item.classList.add('selected');
+          item.scrollIntoView({ block: 'nearest' });
+        } else {
+          item.classList.remove('selected');
+        }
+      });
+    }
+
+    function selectAutocompleteItem(session) {
+      searchInput.value = session.title;
+      searchTerm = session.title.toLowerCase();
+      clearSearchBtn.style.display = 'block';
+      autocomplete.classList.remove('show');
+
+      // Switch to the correct day
+      currentDay = session.day.toString();
+      dayTabs.querySelectorAll('.day-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.day === currentDay);
+      });
+
+      render();
+
+      // Scroll to the session card
+      setTimeout(() => {
+        const card = listView.querySelector(`[data-session-id="${session.id}"]`) ||
+          calendarView.querySelector(`[data-session-id="${session.id}"]`);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('flash');
+          setTimeout(() => card.classList.remove('flash'), 2000);
+        }
+      }, 100);
+    }
+
+    function closeAutocomplete() {
+      autocomplete.classList.remove('show');
+      selectedAutocompleteIndex = -1;
+    }
+
+    // Initialize
+    function init() {
+      // Populate filters
+      const types = [...new Set(sessions.map(s => s.type))].sort();
+      types.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        typeFilterEl.appendChild(option);
+      });
+
+      const rooms = [...new Set(sessions.map(s => s.room).filter(Boolean))].sort();
+      rooms.forEach(room => {
+        const option = document.createElement('option');
+        option.value = room;
+        option.textContent = room;
+        roomFilterEl.appendChild(option);
+      });
+
+      // Get all unique speakers (from moderators and speakers arrays)
+      const allSpeakers = new Set();
+      sessions.forEach(session => {
+        if (session.moderator) {
+          session.moderator.split(',').forEach(m => {
+            const name = m.trim();
+            if (name && name !== '—') allSpeakers.add(name);
+          });
+        }
+        if (session.speakers) {
+          session.speakers.forEach(speaker => {
+            if (speaker && speaker !== '—') allSpeakers.add(speaker);
+          });
+        }
+      });
+      const speakers = Array.from(allSpeakers).sort();
+      speakers.forEach(speaker => {
+        const option = document.createElement('option');
+        option.value = speaker;
+        option.textContent = speaker;
+        speakerFilterEl.appendChild(option);
+      });
+
+      // Event listeners
+      dayTabs.addEventListener('click', (e) => {
+        if (e.target.classList.contains('day-tab')) {
+          dayTabs.querySelectorAll('.day-tab').forEach(btn => btn.classList.remove('active'));
+          e.target.classList.add('active');
+          currentDay = e.target.dataset.day;
+          render();
+        }
+      });
+
+      searchInput.addEventListener('input', (e) => {
+        const value = e.target.value;
+        searchTerm = value.toLowerCase();
+        // Show/hide clear search button
+        clearSearchBtn.style.display = value ? 'block' : 'none';
+        updateAutocomplete(value);
+        render();
+      });
+
+      searchInput.addEventListener('keydown', (e) => {
+        if (!autocomplete.classList.contains('show')) return;
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          selectedAutocompleteIndex = Math.min(selectedAutocompleteIndex + 1, autocompleteItems.length - 1);
+          updateAutocompleteSelection();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          selectedAutocompleteIndex = Math.max(selectedAutocompleteIndex - 1, -1);
+          updateAutocompleteSelection();
+        } else if (e.key === 'Enter' && selectedAutocompleteIndex >= 0) {
+          e.preventDefault();
+          selectAutocompleteItem(autocompleteItems[selectedAutocompleteIndex]);
+        } else if (e.key === 'Escape') {
+          closeAutocomplete();
+        }
+      });
+
+      searchInput.addEventListener('focus', () => {
+        if (searchInput.value.length >= 2) {
+          updateAutocomplete(searchInput.value);
+        }
+      });
+
+      // Close autocomplete when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !autocomplete.contains(e.target)) {
+          closeAutocomplete();
+        }
+      });
+
+      clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchTerm = '';
+        clearSearchBtn.style.display = 'none';
+        closeAutocomplete();
+        render();
+        searchInput.focus();
+      });
+
+      searchModeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          searchModeButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          searchMode = btn.dataset.mode;
+          render();
+        });
+      });
+
+      typeFilterEl.addEventListener('change', (e) => {
+        typeFilter = e.target.value;
+        render();
+      });
+
+      roomFilterEl.addEventListener('change', (e) => {
+        roomFilter = e.target.value;
+        render();
+      });
+
+      speakerFilterEl.addEventListener('change', (e) => {
+        speakerFilter = e.target.value;
+        render();
+      });
+
+      clearFiltersBtn.addEventListener('click', () => {
+        typeFilter = '';
+        roomFilter = '';
+        speakerFilter = '';
+        typeFilterEl.value = '';
+        roomFilterEl.value = '';
+        speakerFilterEl.value = '';
+        render();
+      });
+
+      // Dev button - Remove before production
+      /*
+      const devLiveButton = document.getElementById('devLiveButton');
+      if (devLiveButton) {
+        devLiveButton.addEventListener('click', () => {
+          devModeActive = !devModeActive;
+          devLiveButton.classList.toggle('active');
+          devLiveButton.textContent = devModeActive ? '✅ Live Demo ON' : '🔴 Demo Live';
+          updateLiveStatus();
+          render(); // Re-render to update all cards
+        });
+      }
+      */
+      render();
+    }
+
+    // Filter sessions
+    function getFilteredSessions() {
+      let filtered = sessions.filter(session => {
+        // Day filter
+        if (currentDay !== 'all' && session.day !== parseInt(currentDay)) {
+          return false;
+        }
+
+        // Type filter
+        if (typeFilter && session.type !== typeFilter) {
+          return false;
+        }
+
+        // Room filter
+        if (roomFilter && session.room !== roomFilter) {
+          return false;
+        }
+
+        // Speaker filter
+        if (speakerFilter) {
+          const moderatorNames = session.moderator
+            ? session.moderator.split(',').map(m => m.trim())
+            : [];
+          const speakerNames = session.speakers || [];
+          const allPeople = [...moderatorNames, ...speakerNames];
+          if (!allPeople.includes(speakerFilter)) {
+            return false;
+          }
+        }
+
+        // Search filter
+        if (searchTerm) {
+          let searchable = [];
+
+          if (searchMode === 'sessions') {
+            // Only search in session titles and subtitles
+            searchable = [
+              session.title,
+              session.subtitle || ''
+            ];
+          } else if (searchMode === 'people') {
+            // Only search in moderators and speakers
+            searchable = [
+              session.moderator || '',
+              ...session.speakers
+            ];
+          } else {
+            // Search in all fields (default)
+            searchable = [
+              session.title,
+              session.subtitle || '',
+              session.moderator || '',
+              session.room || '',
+              ...session.speakers
+            ];
+          }
+
+          const searchableText = searchable.join(' ').toLowerCase();
+          if (!searchableText.includes(searchTerm)) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+
+      // Sort by relevance if searching
+      if (searchTerm) {
+        filtered = filtered.map(session => {
+          let score = 0;
+
+          if (searchMode === 'sessions') {
+            // Only score title and subtitle matches
+            const titleLower = session.title.toLowerCase();
+            const subtitleLower = (session.subtitle || '').toLowerCase();
+
+            if (titleLower.includes(searchTerm)) {
+              score += 10;
+              if (titleLower === searchTerm || titleLower.startsWith(searchTerm)) {
+                score += 5;
+              }
+            }
+            if (subtitleLower.includes(searchTerm)) {
+              score += 3;
+            }
+          } else if (searchMode === 'people') {
+            // Only score moderator and speaker matches
+            const moderatorLower = (session.moderator || '').toLowerCase();
+            const speakersLower = session.speakers.join(' ').toLowerCase();
+
+            if (moderatorLower.includes(searchTerm)) {
+              score += 10;
+            }
+            if (speakersLower.includes(searchTerm)) {
+              score += 5;
+            }
+          } else {
+            // Score all fields (default)
+            const titleLower = session.title.toLowerCase();
+            const subtitleLower = (session.subtitle || '').toLowerCase();
+            const moderatorLower = (session.moderator || '').toLowerCase();
+            const roomLower = (session.room || '').toLowerCase();
+            const speakersLower = session.speakers.join(' ').toLowerCase();
+
+            // Title matches get highest priority
+            if (titleLower.includes(searchTerm)) {
+              score += 10;
+              // Exact title match gets even higher priority
+              if (titleLower === searchTerm || titleLower.startsWith(searchTerm)) {
+                score += 5;
+              }
+            }
+            // Subtitle matches get medium priority
+            if (subtitleLower.includes(searchTerm)) {
+              score += 3;
+            }
+            // Other fields get lower priority
+            if (moderatorLower.includes(searchTerm) || roomLower.includes(searchTerm) || speakersLower.includes(searchTerm)) {
+              score += 1;
+            }
+          }
+
+          return { session, score };
+        }).sort((a, b) => {
+          // Sort by score descending, then by date/time
+          if (b.score !== a.score) {
+            return b.score - a.score;
+          }
+          // If scores are equal, sort by date then time
+          const dateCompare = a.session.date.localeCompare(b.session.date);
+          if (dateCompare !== 0) return dateCompare;
+          return a.session.start.localeCompare(b.session.start);
+        }).map(item => item.session);
+      }
+
+      return filtered;
+    }
+
+    // Format time
+    function formatTime(time, includeEST = false) {
+      const [hours, minutes] = time.split(':');
+      const h = parseInt(hours);
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const h12 = h % 12 || 12;
+      const formatted = `${h12}:${minutes} ${ampm}`;
+      return includeEST ? `${formatted} (EST)` : formatted;
+    }
+
+    // Dev mode - for showcasing live feature
+    let devModeActive = false;
+    let devLiveSessionId = 'mon-1'; // Change this to any session ID you want to demo
+
+    // Check if a session is currently live (happening now)
+    function isSessionLive(session) {
+      // Dev mode override - make specific session always appear live
+      if (devModeActive && session.id === devLiveSessionId) {
+        return true;
+      }
+
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+      // Parse session date (YYYY-MM-DD)
+      const [year, month, day] = session.date.split('-').map(Number);
+      const sessionDate = new Date(year, month - 1, day);
+
+      // Check if session is today
+      if (sessionDate.getTime() !== today.getTime()) {
+        return false;
+      }
+
+      // Parse session start and end times (HH:MM format)
+      const [startHours, startMinutes] = session.start.split(':').map(Number);
+      const [endHours, endMinutes] = session.end.split(':').map(Number);
+
+      // Create Date objects for session start and end times (today)
+      const sessionStart = new Date(year, month - 1, day, startHours, startMinutes);
+      const sessionEnd = new Date(year, month - 1, day, endHours, endMinutes);
+
+      // Check if current time is between session start and end
+      return now >= sessionStart && now <= sessionEnd;
+    }
+
+    // Format full date
+    function formatFullDate(dateString) {
+      // Parse YYYY-MM-DD format explicitly
+      const [year, month, day] = dateString.split('-').map(Number);
+      const date = new Date(year, month - 1, day);
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+    }
+
+    // Highlight search terms
+    function highlight(text, query = null) {
+      const searchQuery = query || searchTerm;
+      if (!searchQuery) return text;
+      const escapedQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`(${escapedQuery})`, 'gi');
+      return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    // Create sub-session card
+    function createSubSessionCard(subSession, index, total, parentSession) {
+      // Make sub-session card clickable - link to session page
+      const card = document.createElement('a');
+      card.className = 'sub-session-card';
+      card.dataset.subSessionId = subSession.id;
+      card.href = `session.html?id=${subSession.id}`;
+      card.style.textDecoration = 'none';
+      card.style.color = 'inherit';
+      card.style.display = 'block';
+
+      // Calculate time slot if parent session has time and duration
+      let timeHTML = '';
+      if (parentSession.start && subSession.duration) {
+        // Parse duration (e.g., "10 minutes" or "10 min")
+        const durationMatch = subSession.duration.match(/(\d+)/);
+        if (durationMatch) {
+          const minutes = parseInt(durationMatch[1]);
+          // Parse parent start time (HH:MM format)
+          const [parentHours, parentMinutes] = parentSession.start.split(':').map(Number);
+          // Calculate cumulative start time for this sub-session
+          let cumulativeMinutes = index * minutes;
+          let subStartHours = parentHours + Math.floor((parentMinutes + cumulativeMinutes) / 60);
+          let subStartMinutes = (parentMinutes + cumulativeMinutes) % 60;
+          // Calculate end time
+          let subEndMinutes = subStartMinutes + minutes;
+          let subEndHours = subStartHours + Math.floor(subEndMinutes / 60);
+          subEndMinutes = subEndMinutes % 60;
+
+          const formatSubTime = (hours, mins) => {
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const h12 = hours % 12 || 12;
+            return `${h12}:${String(mins).padStart(2, '0')} ${ampm}`;
+          };
+
+          timeHTML = `<div class="sub-session-time">${formatSubTime(subStartHours, subStartMinutes)} – ${formatSubTime(subEndHours, subEndMinutes)}</div>`;
+        }
+      } else if (subSession.start && subSession.end) {
+        timeHTML = `<div class="sub-session-time">${formatTime(subSession.start)} – ${formatTime(subSession.end)}</div>`;
+      }
+
+      // Check if presenter has bio page
+      const presenterLink = SPEAKER_INFO[subSession.presenter]
+        ? `<a href="speaker.html?name=${encodeURIComponent(subSession.presenter)}">${subSession.presenter}</a>`
+        : subSession.presenter;
+
+      // Generate avatar for presenter
+      const presenterAvatar = avatarHTML(subSession.presenter);
+      const avatarsHTML = `<div class="avatars" aria-label="Presenter">${presenterAvatar}</div>`;
+
+      card.innerHTML = `
+        <div class="sub-session-number">${index + 1}</div>
+        <div class="sub-session-title">${subSession.title}</div>
+        <div class="sub-session-presenter">
+          <strong>Presenter:</strong> ${presenterLink}
+        </div>
+        ${avatarsHTML}
+        ${timeHTML}
+        ${subSession.description ? `<div class="sub-session-details">${subSession.description}</div>` : ''}
+      `;
+
+      // Add click handler to prevent parent session card link and handle expand/collapse
+      card.addEventListener('click', (e) => {
+        // Allow avatar links to work - don't interfere if clicking on an avatar or link
+        if (e.target.closest('a.avatar') || e.target.closest('.avatar a')) {
+          e.stopPropagation(); // Prevent triggering parent session card link
+          return; // Let the avatar link handle the click
+        }
+        e.stopPropagation(); // Prevent triggering parent session card link
+        // If there's a description, toggle expand/collapse instead of navigating
+        if (subSession.description) {
+          e.preventDefault();
+          card.classList.toggle('expanded');
+        }
+      });
+
+      return card;
+    }
+
+    // Create session card
+    function createSessionCard(session) {
+      // Create wrapper container for card and sub-sessions
+      const wrapper = document.createElement('div');
+      wrapper.className = 'session-card-wrapper';
+
+      // All sessions are clickable - generate URL dynamically
+      const card = document.createElement('a');
+      card.className = 'session-card';
+      card.dataset.sessionId = session.id;
+      card.href = `session.html?id=${session.id}`;
+      card.style.textDecoration = 'none';
+      card.style.color = 'inherit';
+      card.style.display = 'block';
+
+      const typeClass = session.type.toLowerCase().replace(/\s+/g, '-');
+      const speakersText = session.speakers.length > 0
+        ? session.speakers.join(', ')
+        : (session.moderator || '—');
+      const subcode = SUBCODES[session.id] ? `<span class="subcode">${SUBCODES[session.id]}</span>` : '';
+
+      // Check if session is currently live
+      const isLive = isSessionLive(session);
+      if (isLive) {
+        card.classList.add('live');
+      }
+
+      // Extract people (moderators and speakers) for avatars
+      const people = [
+        ...(session.moderator ? session.moderator.split(',').map(x => x.trim()).filter(x => x && x !== '—') : []),
+        ...(session.speakers || []).filter(x => x && x !== '—')
+      ].filter((v, i, a) => a.indexOf(v) === i); // Remove duplicates
+
+      const avatarsHTML = people.length > 0
+        ? `<div class="avatars" aria-label="Speakers and Moderators">${people.map(avatarHTML).join('')}</div>`
+        : '';
+
+      // Create button HTML for sub-sessions if they exist
+      const subSessionsButtonHTML = (session.subSessions && session.subSessions.length > 0)
+        ? `<button type="button" class="sub-sessions-button" data-session-id="${session.id}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+            <span>View Plenary Presentations (${session.subSessions.length})</span>
+          </button>`
+        : '';
+
+      // Live badge HTML
+      const liveBadgeHTML = isLive ? '<span class="live-badge">Live</span>' : '';
+
+      card.innerHTML = `
+        <div class="session-header">
+          <span class="session-type ${typeClass}">${session.type}${subcode}${liveBadgeHTML}</span>
+          <span class="session-time">${formatTime(session.start)} – ${formatTime(session.end)}</span>
+        </div>
+        <div class="session-title">${highlight(session.title)}</div>
+        ${session.subtitle ? `<div class="session-details" style="font-style: italic; margin-bottom: 8px;">${highlight(session.subtitle).replace(/\n/g, '<br>')}</div>` : ''}
+        ${session.moderator ? `<div class="session-details"><strong>Moderator:</strong> ${highlight(session.moderator)}</div>` : ''}
+        ${session.speakers.length > 0 ? `<div class="session-details"><strong>Speakers:</strong> ${highlight(speakersText)}</div>` : ''}
+        ${avatarsHTML}
+        ${session.room ? `<span class="session-room">📍 ${highlight(session.room)}</span>` : ''}
+        ${session.note ? `<div class="session-details" style="margin-top: 8px; font-size: 0.85rem; color: var(--text-light);"><em>${session.note}</em></div>` : ''}
+        ${subSessionsButtonHTML}
+      `;
+
+      wrapper.appendChild(card);
+
+      // Add sub-sessions if they exist
+      if (session.subSessions && session.subSessions.length > 0) {
+        const subSessionsContainer = document.createElement('div');
+        subSessionsContainer.className = 'sub-sessions-container collapsed';
+        subSessionsContainer.dataset.sessionId = session.id;
+
+        const subSessionsList = document.createElement('div');
+        subSessionsList.className = 'sub-sessions-list';
+
+        session.subSessions.forEach((subSession, index) => {
+          subSessionsList.appendChild(createSubSessionCard(subSession, index, session.subSessions.length, session));
+        });
+
+        subSessionsContainer.appendChild(subSessionsList);
+        wrapper.appendChild(subSessionsContainer);
+
+        // Add toggle functionality to the button inside the card
+        const button = card.querySelector('.sub-sessions-button');
+        if (button) {
+          button.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent triggering the card link
+            e.preventDefault();
+            subSessionsContainer.classList.toggle('collapsed');
+            const isCollapsed = subSessionsContainer.classList.contains('collapsed');
+            const svg = button.querySelector('svg');
+            if (svg) {
+              svg.style.transform = isCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)';
+            }
+          });
+        }
+      }
+
+      return wrapper;
+    }
+
+    // Render list view
+    function renderListView(filteredSessions) {
+      listView.innerHTML = '';
+
+      if (filteredSessions.length === 0) {
+        listView.innerHTML = `
+          <div class="empty-state" style="grid-column: 1/-1;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <h3>No sessions found</h3>
+            <p>Try adjusting your filters or search terms</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Group sessions by date and time range
+      const dateGroups = {};
+      filteredSessions.forEach(session => {
+        if (!session.date) return;
+        if (!dateGroups[session.date]) {
+          dateGroups[session.date] = {};
+        }
+        const timeKey = `${session.start}-${session.end}`;
+        if (!dateGroups[session.date][timeKey]) {
+          dateGroups[session.date][timeKey] = {
+            start: session.start,
+            end: session.end,
+            sessions: []
+          };
+        }
+        dateGroups[session.date][timeKey].sessions.push(session);
+      });
+
+      // Sort dates
+      const sortedDates = Object.keys(dateGroups).sort();
+
+      sortedDates.forEach(date => {
+        // Date header
+        const dateSection = document.createElement('div');
+        dateSection.className = 'date-section';
+        const dateHeader = document.createElement('div');
+        dateHeader.className = 'date-header';
+        dateHeader.textContent = formatFullDate(date);
+        dateSection.appendChild(dateHeader);
+
+        // Sort time slots for this date by start time
+        const timeSlots = Object.keys(dateGroups[date]).sort((a, b) => {
+          return dateGroups[date][a].start.localeCompare(dateGroups[date][b].start);
+        });
+
+        timeSlots.forEach(timeSlot => {
+          const timeSlotData = dateGroups[date][timeSlot];
+          // Time slot header with both start and end times
+          const timeHeader = document.createElement('div');
+          timeHeader.className = 'time-slot-header';
+          timeHeader.textContent = `${formatTime(timeSlotData.start)} - ${formatTime(timeSlotData.end)} (EST)`;
+          dateSection.appendChild(timeHeader);
+
+          // Sessions container for this time slot
+          const sessionsContainer = document.createElement('div');
+          sessionsContainer.className = 'time-slot-sessions';
+
+          // Sort sessions within time slot by room or title
+          const sessions = timeSlotData.sessions.sort((a, b) => {
+            if (a.room && b.room) {
+              return a.room.localeCompare(b.room);
+            }
+            return a.title.localeCompare(b.title);
+          });
+
+          sessions.forEach(session => {
+            sessionsContainer.appendChild(createSessionCard(session));
+          });
+
+          dateSection.appendChild(sessionsContainer);
+        });
+
+        listView.appendChild(dateSection);
+      });
+    }
+
+    // Update live status for all session cards
+    function updateLiveStatus() {
+      const allCards = document.querySelectorAll('.session-card');
+      allCards.forEach(card => {
+        const sessionId = card.dataset.sessionId;
+        const session = sessions.find(s => s.id === sessionId);
+
+        if (session) {
+          const isLive = isSessionLive(session);
+          const hasLiveBadge = card.querySelector('.live-badge');
+
+          if (isLive) {
+            card.classList.add('live');
+            if (!hasLiveBadge) {
+              // Add live badge to the session type span
+              const sessionType = card.querySelector('.session-type');
+              if (sessionType) {
+                const liveBadge = document.createElement('span');
+                liveBadge.className = 'live-badge';
+                liveBadge.textContent = 'Live';
+                sessionType.appendChild(liveBadge);
+              }
+            }
+          } else {
+            card.classList.remove('live');
+            if (hasLiveBadge) {
+              hasLiveBadge.remove();
+            }
+          }
+        }
+      });
+    }
+
+    // Main render function
+    function render() {
+      const filteredSessions = getFilteredSessions();
+
+      // Update results count
+      const total = currentDay === 'all' ? sessions.length : sessions.filter(s => s.day === parseInt(currentDay)).length;
+      resultsCount.innerHTML = `Showing <strong>${filteredSessions.length}</strong> of ${total} sessions`;
+
+      // Render list view
+      renderListView(filteredSessions);
+
+      // Update live status after rendering
+      setTimeout(updateLiveStatus, 100);
+    }
+
+    // Start app
+    init();
+
+    // Update live status every minute
+    setInterval(updateLiveStatus, 60000);
+  </script>
+</body>
+
+</html>

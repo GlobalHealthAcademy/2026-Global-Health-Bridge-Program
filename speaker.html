@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speaker Bio</title>
+  <style>
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('https://raw.githubusercontent.com/dept/highway/master/docs/assets/fonts/Gilroy-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #1a4d7a;
+      --primary-light: #2d6ba3;
+      --text: #1a1a1a;
+      --text-light: #666;
+      --bg: #f8f9fa;
+      --white: #ffffff;
+      --border: #e0e0e0;
+      --radius: 8px;
+    }
+
+    body {
+      font-family: 'Gilroy', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--primary-light);
+    }
+
+    .speaker-header {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+    }
+
+    .speaker-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 2.5rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      border: 4px solid var(--white);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .speaker-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .speaker-info {
+      flex: 1;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .speaker-title {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 16px;
+    }
+
+    .speaker-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .meta-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    .speaker-content {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-section {
+      margin-bottom: 32px;
+    }
+
+    .content-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .content-section h2 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .content-section p {
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .expertise-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .expertise-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .expertise-list li:last-child {
+      border-bottom: none;
+    }
+
+    .sessions-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sessions-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sessions-list li:last-child {
+      border-bottom: none;
+    }
+
+    .session-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .session-link:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    .session-meta {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    .session-role {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--bg);
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-left: 8px;
+    }
+
+    .error-message {
+      background: #fee;
+      border: 1px solid #fcc;
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      color: #c33;
+    }
+
+    @media (max-width: 600px) {
+      .speaker-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .speaker-avatar {
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="index.html" class="back-link">← Back to Schedule</a>
+    <div id="speakerContent"></div>
+  </div>
+
+  <script>
+    // Speaker photos - Add photo URLs here as you get them
+    // Format: "Speaker Name": "https://yourwebsite.com/path/to/photo.jpg"
+    const SPEAKER_PHOTOS = {
+      "Bulat Ziganshin": "https://static.wixstatic.com/media/a339cb_df74ae8b7be84e569791bdf13113e1cc~mv2.jpg",
+      "Aparna Oltikar": "https://static.wixstatic.com/media/a339cb_44105c79e3a641e7941afb34c0a1e48f~mv2.png",
+      // Add more speaker photos as needed
+    };
+
+    // Speaker information - Biography, expertise, etc.
+    const SPEAKER_INFO = {
+      "Bulat Ziganshin": {
+        title: "Global Health Conference Organizer & Moderator",
+        biography: "Bulat Ziganshin is a prominent figure in global health education and conference organization. With extensive experience in facilitating international collaborations, Bulat has been instrumental in bringing together diverse voices from around the world to advance global health initiatives. His work focuses on creating inclusive platforms for knowledge exchange, fostering partnerships between institutions, and developing innovative formats for global health conferences that maximize engagement and impact.",
+        expertise: [
+          "Global Health Conference Organization",
+          "International Partnership Development",
+          "Educational Program Design",
+          "Cross-Cultural Collaboration"
+        ]
+      },
+      "Aparna Oltikar": {
+        title: "Conference Coordinator & Moderator",
+        biography: "Aparna Oltikar is dedicated to advancing global health education through innovative conference formats and collaborative partnerships.",
+        expertise: [
+          "Conference Coordination",
+          "Global Health Education",
+          "Partnership Development"
+        ]
+      }
+      // Add more speakers as needed
+    };
+
+    // Include the full sessions array from index.html
+    const sessions = [
+      // Monday, February 2, 2026 (Day 0 - using 0-index internally if dayTabs relies on it, or update dayTabs logic. Original used Day 0 for Sun, Day 1 for Mon. I will use Day 0 for Mon, Day 1 for Tue)
+      {
+        id: 'mon-1',
+        day: 0,
+        date: '2026-02-02',
+        start: '08:00',
+        end: '08:15',
+        type: 'Special',
+        title: 'Welcome and Introductions',
+        subtitle: 'Lead: Aparna Oltikar',
+        moderator: 'Aparna Oltikar',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-2',
+        day: 0,
+        date: '2026-02-02',
+        start: '08:15',
+        end: '09:00',
+        type: 'Plenary',
+        title: 'Introduction to Global Health Bridge Course at Nuvance Health',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Bulat Ziganshin'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-3',
+        day: 0,
+        date: '2026-02-02',
+        start: '09:00',
+        end: '10:30',
+        type: 'Plenary',
+        title: 'Global Public Health: Existential Crises and the Role of the US',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Kirk Scirto'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-4',
+        day: 0,
+        date: '2026-02-02',
+        start: '10:30',
+        end: '10:45',
+        type: 'Break',
+        title: 'Break',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-5',
+        day: 0,
+        date: '2026-02-02',
+        start: '10:45',
+        end: '12:00',
+        type: 'Plenary',
+        title: 'Infectious Diseases in the Global South',
+        subtitle: 'Format: Presentation, case reports',
+        moderator: '',
+        speakers: ['Steve Scholand'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-6',
+        day: 0,
+        date: '2026-02-02',
+        start: '12:00',
+        end: '12:30',
+        type: 'Meal',
+        title: 'Lunch Break',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-7',
+        day: 0,
+        date: '2026-02-02',
+        start: '12:30',
+        end: '13:30',
+        type: 'Plenary',
+        title: 'Healthcare in Armenia: Global Perspective and Challenges',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Gohar Shahsuvaryan'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-8',
+        day: 0,
+        date: '2026-02-02',
+        start: '13:30',
+        end: '14:45',
+        type: 'Plenary',
+        title: 'Local Global Health: Perspectives from the Chiricahua Community Health Centers in Arizona (tentative title)',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Jonathan Melk'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-9',
+        day: 0,
+        date: '2026-02-02',
+        start: '14:45',
+        end: '15:00',
+        type: 'Break',
+        title: 'Break',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-10',
+        day: 0,
+        date: '2026-02-02',
+        start: '15:00',
+        end: '16:15',
+        type: 'Plenary',
+        title: 'Bridging the Gap in Global Mental Health Education Between High- and Low/Middle-Income Countries',
+        subtitle: 'Format: Interactive Panel Discussion',
+        moderator: 'Charles Herrick',
+        speakers: ['Majd Soudan', 'Sabih Rahman', 'Psychiatry Residents from Makerere University'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-11',
+        day: 0,
+        date: '2026-02-02',
+        start: '16:15',
+        end: '16:30',
+        type: 'Special',
+        title: 'Global Health Bridge Group Photo',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'mon-12',
+        day: 0,
+        date: '2026-02-02',
+        start: '16:30',
+        end: '18:00',
+        type: 'Networking',
+        title: 'Global Health Reception, Networking, and Posters',
+        moderator: '',
+        speakers: [],
+        room: 'Robilotti Conference Room'
+      },
+      // Tuesday, February 3, 2026
+      {
+        id: 'tue-1',
+        day: 1,
+        date: '2026-02-03',
+        start: '08:00',
+        end: '09:15',
+        type: 'Plenary',
+        title: 'Decolonizing Global Health',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Kirk Scirto'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-2',
+        day: 1,
+        date: '2026-02-03',
+        start: '09:15',
+        end: '09:30',
+        type: 'Break',
+        title: 'Break',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-3',
+        day: 1,
+        date: '2026-02-03',
+        start: '09:30',
+        end: '11:00',
+        type: 'Plenary',
+        title: 'Global Health As a Career: Opportunities and Challenges',
+        subtitle: 'Format: Interactive Panel Discussion',
+        moderator: 'Steve Scholand',
+        speakers: ['Gohar Shahsuvaryan', 'Jonathan Melk', 'Jasper Tolarba', 'Kirk Scirto', 'Fiona Makoni'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-4',
+        day: 1,
+        date: '2026-02-03',
+        start: '11:00',
+        end: '12:00',
+        type: 'Plenary',
+        title: 'Healthcare in the Philippines: Global Perspective and Challenges',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Jasper Tolarba'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-5',
+        day: 1,
+        date: '2026-02-03',
+        start: '12:00',
+        end: '13:30',
+        type: 'Meal',
+        title: 'Lunch and headshots/photos for residency applications',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-6',
+        day: 1,
+        date: '2026-02-03',
+        start: '13:30',
+        end: '14:30',
+        type: 'Plenary',
+        title: 'Healthcare in Zimbabwe: Global Perspective and Challenges',
+        subtitle: 'Format: Virtual Lecture',
+        moderator: '',
+        speakers: ['Fiona Makoni'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-7',
+        day: 1,
+        date: '2026-02-03',
+        start: '14:30',
+        end: '15:30',
+        type: 'Plenary',
+        title: 'Malaria in Resource-Limited Environments: Diagnosis, Treatment, and Prevention (tentative title)',
+        subtitle: 'Format: Presentation, case reports',
+        moderator: '',
+        speakers: ['Steve Scholand'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-8',
+        day: 1,
+        date: '2026-02-03',
+        start: '15:30',
+        end: '15:45',
+        type: 'Break',
+        title: 'Break',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-9',
+        day: 1,
+        date: '2026-02-03',
+        start: '15:45',
+        end: '17:15',
+        type: 'Plenary',
+        title: 'The Role of Public Health in Addressing Armed Conflict',
+        subtitle: 'Format: Lecture',
+        moderator: '',
+        speakers: ['Kaveh Khoshnood'],
+        room: 'Creasy Auditorium'
+      },
+      {
+        id: 'tue-10',
+        day: 1,
+        date: '2026-02-03',
+        start: '17:15',
+        end: '17:30',
+        type: 'Special',
+        title: 'Adjourn Global Health Bridge',
+        moderator: '',
+        speakers: [],
+        room: 'Creasy Auditorium'
+      }
+    ];
+
+    // Helper functions
+    function formatTime(time, includeEST = false) {
+      const [hours, minutes] = time.split(':');
+      const h = parseInt(hours);
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      const h12 = h % 12 || 12;
+      const formatted = `${h12}:${minutes} ${ampm}`;
+      return includeEST ? `${formatted} (EST)` : formatted;
+    }
+
+    function formatFullDate(dateString) {
+      const [year, month, day] = dateString.split('-').map(Number);
+      const date = new Date(year, month - 1, day);
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+    }
+
+    function getInitials(name) {
+      return name.split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+    }
+
+    // Get speaker name from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const speakerName = decodeURIComponent(urlParams.get('name') || '');
+
+    // Find all sessions with this speaker
+    const speakerSessions = sessions.filter(s => {
+      const moderatorNames = s.moderator ? s.moderator.split(',').map(m => m.trim()) : [];
+      const speakerNames = s.speakers || [];
+      return moderatorNames.includes(speakerName) || speakerNames.includes(speakerName);
+    });
+
+    // Get speaker info
+    const speakerInfo = SPEAKER_INFO[speakerName];
+
+    // Render the page
+    const contentDiv = document.getElementById('speakerContent');
+
+    if (!speakerName || speakerSessions.length === 0) {
+      contentDiv.innerHTML = `
+        <div class="error-message">
+          <h2>Speaker Not Found</h2>
+          <p>The speaker you're looking for doesn't exist or has no sessions.</p>
+          <p><a href="index.html">Return to schedule</a></p>
+        </div>
+      `;
+      document.title = 'Speaker Not Found';
+    } else {
+      const initials = getInitials(speakerName);
+      const title = speakerInfo?.title || 'Speaker';
+      const biography = speakerInfo?.biography || 'Biography information not available.';
+      const expertise = speakerInfo?.expertise || [];
+      const photoUrl = SPEAKER_PHOTOS[speakerName];
+
+      // Sort sessions by date, then start time
+      speakerSessions.sort((a, b) => {
+        const dateCompare = a.date.localeCompare(b.date);
+        if (dateCompare !== 0) return dateCompare;
+        return a.start.localeCompare(b.start);
+      });
+
+      const sessionsHTML = speakerSessions.map(s => {
+        const isModerator = s.moderator && s.moderator.split(',').map(m => m.trim()).includes(speakerName);
+        const isSpeaker = s.speakers && s.speakers.includes(speakerName);
+        const role = isModerator && isSpeaker ? 'Moderator & Speaker' : (isModerator ? 'Moderator' : 'Speaker');
+
+        return `
+          <li>
+            <a href="session.html?id=${s.id}" class="session-link">${s.title}</a>
+            <div class="session-meta">
+              ${formatFullDate(s.date)} • ${formatTime(s.start)} – ${formatTime(s.end)} (EST)
+              <span class="session-role">${role}</span>
+            </div>
+          </li>
+        `;
+      }).join('');
+
+      const expertiseHTML = expertise.length > 0
+        ? expertise.map(e => `<li>${e}</li>`).join('')
+        : '<li>No expertise information available.</li>';
+
+      // Generate avatar HTML - use photo if available, otherwise use initials
+      const avatarHTML = photoUrl
+        ? `<img src="${photoUrl}" alt="${speakerName}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.setAttribute('data-fallback', ''); this.remove(); this.parentElement.innerHTML='${initials}'; this.parentElement.style.background='linear-gradient(135deg, #1a4d7a, #2d6ba3)'; this.parentElement.style.color='white'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.fontSize='2.5rem'; this.parentElement.style.fontWeight='700';">`
+        : initials;
+
+      contentDiv.innerHTML = `
+        <div class="speaker-header">
+          <div class="speaker-avatar">${avatarHTML}</div>
+          <div class="speaker-info">
+            <h1>${speakerName}</h1>
+            <p class="speaker-title">${title}</p>
+            <div class="speaker-meta">
+              <span class="meta-tag">${speakerSessions.length} Session${speakerSessions.length !== 1 ? 's' : ''}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="speaker-content">
+          <div class="content-section">
+            <h2>Biography</h2>
+            <p>${biography}</p>
+          </div>
+
+          ${expertise.length > 0 ? `
+            <div class="content-section">
+              <h2>Areas of Expertise</h2>
+              <ul class="expertise-list">${expertiseHTML}</ul>
+            </div>
+          ` : ''}
+
+          <div class="content-section">
+            <h2>Sessions</h2>
+            <ul class="sessions-list">${sessionsHTML}</ul>
+          </div>
+        </div>
+      `;
+
+      document.title = `${speakerName} - Speaker Bio`;
+    }
+  </script>
+</body>
+
+</html>
