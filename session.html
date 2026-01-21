@@ -339,6 +339,15 @@
                 <p>${subSession.description}</p>
               </div>
             ` : ''}
+
+            ${(subSession.objectives || []).length > 0 ? `
+              <div class="content-section">
+                <h2>Objectives</h2>
+                <ul class="questions-list">
+                  ${subSession.objectives.map(o => `<li>${o}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
           </div>
         `;
 
@@ -420,6 +429,17 @@
               </div>
             ` : ''}
           </div>
+
+          ${(session.objectives || []).length > 0 ? `
+            <div class="session-content" style="margin-top: 24px;">
+              <div class="content-section">
+                <h2>Objectives</h2>
+                <ul class="questions-list">
+                  ${session.objectives.map(o => `<li>${o}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+          ` : ''}
 
           ${(session.questions || []).length > 0 ? `
             <div class="session-content" style="margin-top: 24px;">
