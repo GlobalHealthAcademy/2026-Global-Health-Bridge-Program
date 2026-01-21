@@ -1,0 +1,194 @@
+    .session-header {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 32px;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .session-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        font-style: italic;
+        margin-bottom: 24px;
+    }
+
+    .session-meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+    }
+
+    .meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .meta-label {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .meta-value {
+        font-size: 1rem;
+        color: var(--text);
+        font-weight: 600;
+    }
+
+    .session-content {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 32px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-section {
+        margin-bottom: 32px;
+    }
+
+    .content-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .content-section h2 {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-bottom: 16px;
+    }
+
+    .content-section p {
+        margin-bottom: 12px;
+        color: var(--text);
+    }
+
+    .people-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .people-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .people-list li:last-child {
+        border-bottom: none;
+    }
+
+    .people-list a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .questions-list {
+        list-style-type: decimal;
+        padding-left: 24px;
+        color: var(--text);
+    }
+
+    .questions-list li {
+        margin-bottom: 12px;
+        padding-left: 4px;
+    }
+
+    .people-list a:hover {
+        color: var(--primary-light);
+        text-decoration: underline;
+    }
+
+
+    /* Sub-Sessions */
+    .sub-sessions-section {
+        margin-top: 32px;
+    }
+
+    .sub-sessions-section h2 {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-bottom: 16px;
+    }
+
+    .sub-session-item {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--primary);
+        border-radius: var(--radius);
+        padding: 16px;
+        margin-bottom: 12px;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+    .sub-session-item:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transform: translateX(4px);
+        border-left-color: var(--primary-light);
+    }
+
+    .sub-session-item a {
+        color: var(--primary);
+        text-decoration: underline;
+    }
+
+    .sub-session-item a:hover {
+        color: var(--primary-light);
+    }
+
+    .sub-session-item-number {
+        display: inline-block;
+        background: var(--primary);
+        color: var(--white);
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-right: 12px;
+        vertical-align: top;
+    }
+
+    .sub-session-item-content {
+        display: inline-block;
+        width: calc(100% - 50px);
+        vertical-align: top;
+    }
+
+    .sub-session-item-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 8px;
+    }
+
+    .sub-session-item-presenter {
+        font-size: 0.9rem;
+        color: var(--text-light);
+    }
+
+    .sub-session-item-presenter a {
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    .sub-session-item-presenter a:hover {
+        text-decoration: underline;
+    }
+
+    .sub-session-item-time {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        margin-top: 4px;
+    }
