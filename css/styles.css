@@ -80,16 +80,55 @@ a:hover {
   margin-bottom: 16px;
 }
 
-.session-badge.plenary { background: #e3f2fd; color: #1565c0; }
-.session-badge.breakout { background: #f3e5f5; color: #7b1fa2; }
-.session-badge.special { background: #fff3e0; color: #e65100; }
-.session-badge.poster { background: #e8f5e9; color: #2e7d32; }
-.session-badge.meal { background: #fce4ec; color: #c2185b; }
-.session-badge.break { background: #e3e3e3; color: #424242; }
-.session-badge.workshop { background: #e0f2f1; color: #00695c; }
-.session-badge.lecture { background: #e8eaf6; color: #283593; }
-.session-badge.networking { background: #fff8e1; color: #ff8f00; }
-.session-badge.panel { background: #f3e5f5; color: #7b1fa2; }
+.session-badge.plenary {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.session-badge.breakout {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.session-badge.special {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.session-badge.poster {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.session-badge.meal {
+  background: #fce4ec;
+  color: #c2185b;
+}
+
+.session-badge.break {
+  background: #e3e3e3;
+  color: #424242;
+}
+
+.session-badge.workshop {
+  background: #e0f2f1;
+  color: #00695c;
+}
+
+.session-badge.lecture {
+  background: #e8eaf6;
+  color: #283593;
+}
+
+.session-badge.networking {
+  background: #fff8e1;
+  color: #ff8f00;
+}
+
+.session-badge.panel {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
 
 .subcode {
   display: inline-block;
