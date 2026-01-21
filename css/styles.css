@@ -1,0 +1,163 @@
+@font-face {
+  font-family: 'Gilroy';
+  src: url('https://raw.githubusercontent.com/dept/highway/master/docs/assets/fonts/Gilroy-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #1a4d7a;
+  --primary-dark: #0f2f4f;
+  --primary-light: #2d6ba3;
+  --accent: #4a90e2;
+  --text: #1a1a1a;
+  --text-light: #666;
+  --bg: #f8f9fa;
+  --white: #ffffff;
+  --border: #e0e0e0;
+  --border-light: #f0f0f0;
+  --success: #28a745;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --radius: 8px;
+  --radius-sm: 4px;
+}
+
+body {
+  font-family: 'Gilroy', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+/* Links */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  text-decoration: none;
+  color: var(--primary-light);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--primary-light);
+}
+
+/* Badges & Subcodes */
+.session-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.session-badge.plenary { background: #e3f2fd; color: #1565c0; }
+.session-badge.breakout { background: #f3e5f5; color: #7b1fa2; }
+.session-badge.special { background: #fff3e0; color: #e65100; }
+.session-badge.poster { background: #e8f5e9; color: #2e7d32; }
+.session-badge.meal { background: #fce4ec; color: #c2185b; }
+.session-badge.break { background: #e3e3e3; color: #424242; }
+.session-badge.workshop { background: #e0f2f1; color: #00695c; }
+.session-badge.lecture { background: #e8eaf6; color: #283593; }
+.session-badge.networking { background: #fff8e1; color: #ff8f00; }
+.session-badge.panel { background: #f3e5f5; color: #7b1fa2; }
+
+.subcode {
+  display: inline-block;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #fff;
+  color: #111827;
+  border: 1px solid var(--border);
+  font-size: 0.72rem;
+  margin-left: 6px;
+}
+
+/* Avatars */
+.avatars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid var(--white);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a4d7a 0%, #2d6ba3 100%);
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.avatar:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Error Message */
+.error-message {
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  color: #c33;
+}
+
+/* Typography Helpers */
+h1 {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
