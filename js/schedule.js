@@ -10,7 +10,52 @@
 // -----------------------------------------------------------------------------
 // 1. Session Data
 // -----------------------------------------------------------------------------
-// Array of all conference sessions, including dates, times, rooms, and descriptions.
+// Array of all conference sessions.
+// 
+// --- SESSION FORMAT EXAMPLE ---
+// {
+//   id: 'mon-3',                  // Unique ID for the session (required)
+//   day: 0,                       // Day index (0=Day 1, 1=Day 2, etc.)
+//   date: '2026-02-02',           // YYYY-MM-DD format
+//   start: '09:00',               // 24-hour HH:MM format
+//   end: '10:30',                 // 24-hour HH:MM format
+//   type: 'Lecture',              // Type for styling (Lecture, Panel, Workshop, Special, Break, Meal, Networking)
+//   title: 'Session Title',       // Main title
+//   subtitle: 'Format: Lecture',  // Subtitle (optional)
+//   description: 'Description...', // Markdown/HTML description
+//   objectives: [                 // Array of learning objectives (shown above questions)
+//     'Objective 1',
+//     'Objective 2'
+//   ],
+//   questions: [                  // Array of questions for discussion
+//     'Question 1?',
+//     'Question 2?'
+//   ],
+//   resources: [                  // Array of related resources
+//     { label: 'Label', url: 'https://...' }
+//   ],
+//   moderator: 'Name',            // String (comma separated for multiple)
+//   speakers: ['Name 1', 'Name 2'], // Array of speaker names
+//   room: 'Room Name',            // Location
+//   note: 'Note text...',         // Additional note (italicized at bottom)
+//   
+//   // SUB-SESSION FORMAT EXAMPLE (Optional)
+//   // If present, these will be listed at the bottom of the session page
+//   subSessions: [
+//     {
+//       id: 'sub-1',              // Unique ID for sub-session detail page
+//       title: 'Sub Title',       // Title of the sub-presentation
+//       presenter: 'Name',        // Main presenter
+//       duration: '15 minutes',   // Duration (used for auto-calculating time)
+//       description: '...',       // Description for the sub-session page
+//       objectives: ['...'],      // Objectives for the sub-session page
+//       // start: '09:00',        // Optional: Manual start time
+//       // end: '09:15'           // Optional: Manual end time
+//     }
+//   ]
+// }
+// ------------------------------
+
 const sessions = [
   // Monday, February 2, 2026 (Day 0)
   {
@@ -49,6 +94,12 @@ const sessions = [
     title: 'Global Public Health: Existential Crises and the Role of the US',
     subtitle: 'Format: Lecture',
     description: 'An in-depth look at the major existential crises facing global public health today and the specific role that the United States plays in addressing (or exacerbating) these challenges.',
+    objectives: [
+      'Understand the core concepts of global health and its historical evolution',
+      'Identify current major existential crises in global public health',
+      'Analyze the role and impact of US policy on international health initiatives',
+      'Discuss potential strategies for mitigating global health inequities'
+    ],
     questions: [
       'What do you believe is the single biggest threat to global public health today?',
       'How can the US better leverage its resources to support global health initiatives?'
@@ -306,7 +357,10 @@ const sessions = [
 // 2. Speaker Photos
 // -----------------------------------------------------------------------------
 // Mapping of speaker names to their photo URLs.
-// Format: "Speaker Name": "https://url-to-photo.jpg"
+// 
+// --- SPEAKER PHOTO FORMAT ---
+// "Speaker Full Name": "https://url-to-photo.jpg",
+// -----------------------------
 const SPEAKER_PHOTOS = {
   "Bulat Ziganshin": "https://static.wixstatic.com/media/a339cb_df74ae8b7be84e569791bdf13113e1cc~mv2.jpg",
   "Aparna Oltikar": "https://static.wixstatic.com/media/a339cb_44105c79e3a641e7941afb34c0a1e48f~mv2.png",
@@ -317,6 +371,17 @@ const SPEAKER_PHOTOS = {
 // 3. Speaker Information
 // -----------------------------------------------------------------------------
 // Detailed information including titles, bios, and areas of expertise.
+//
+// --- SPEAKER INFO FORMAT ---
+// "Speaker Full Name": {
+//   title: "Professional Title",
+//   biography: "Full biography text...",
+//   expertise: [
+//     "Skill 1",
+//     "Skill 2"
+//   ]
+// },
+// ----------------------------
 const SPEAKER_INFO = {
   "Bulat Ziganshin": {
     title: "Global Health Conference Organizer & Moderator",
