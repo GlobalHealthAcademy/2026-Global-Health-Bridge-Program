@@ -457,9 +457,10 @@
               <div class="content-section">
                 <h2>Resources / Reading Materials</h2>
                 <ul class="people-list">
-                  ${session.resources.map(r => `
-                    <li><a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.label || r.url}</a></li>
-                  `).join('')}
+                  ${session.resources.map(r => {
+          const hasUrl = r.url && r.url.trim() !== '' && r.url !== '#';
+          return `<li>${hasUrl ? `<a href="${r.url}" target="_blank" rel="noopener noreferrer">` : ''}${r.label || r.url}${hasUrl ? '</a>' : ''}</li>`;
+        }).join('')}
                 </ul>
               </div>
             </div>
